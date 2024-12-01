@@ -1,12 +1,12 @@
 package year2024.day01
 
-import puzzle.Puzzle
+import year2024.DayOf2024
 import parse.{*, given}
 import exts.iterables.countItems
 
 type I = List[List[Int] - """\s+"""] - "\n"
 
-object Day01 extends Puzzle[I](2024, 1, "Historian Hysteria"):
+object Day01 extends DayOf2024[I](1, "Historian Hysteria"):
 
   override def part1(prs: I): Int =
     val List(ids1, ids2) = prs.transpose
