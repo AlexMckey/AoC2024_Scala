@@ -1,4 +1,4 @@
-package year2024
+package year2024.day00
 
 import puzzle.Puzzle
 import parse.given

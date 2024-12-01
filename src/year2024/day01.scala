@@ -3,6 +3,8 @@ package year2024.day01
 import puzzle.Puzzle
 import parse.{*, given}
 
+//import scala.math.abs
+
 type I = List[List[Int] - """\s+"""] - "\n"
 
 object Day01 extends Puzzle[I](2024, 1, "Historian Hysteria"):
@@ -11,14 +13,14 @@ object Day01 extends Puzzle[I](2024, 1, "Historian Hysteria"):
     val ids = prs.transpose
     ids.head.sorted
        .zip(ids.last.sorted)
-       .map(ab => scala.math.abs(ab._1 - ab._2))
+       .map((a, b) => (a - b).abs)
        .sum
 
   override def part2(prs: I): Int =
     val ids    = prs.transpose
-    val idsCnt = ids.last.groupMapReduce(identity)(_ => 1)(_ + _)
+    val idsCnt = ids.last.groupMapReduce(identity)(_ => 1)(_ + _).withDefaultValue(0)
     ids.head
-       .map(id => id * idsCnt.getOrElse(id,0))
+       .map(id => id * idsCnt(id))
        .sum
 
 //Day 1: Historian Hysteria
