@@ -27,6 +27,6 @@ object Day02 extends DayOf2024[I](2, "Red-Nosed Reports"):
     reps.count(l => isSafe(l) || skipOneBad(l).exists(isSafe))
 
 //Day 2: Red-Nosed Reports
-//  parse : 59.6ms
-//  part 1: 68.6ms -> 432
-//  part 2: 71.2ms -> 488
+//  parse : 29.0ms
+//  part 1: 29.3ms -> 432
+//  part 2: 81.3ms -> 488
