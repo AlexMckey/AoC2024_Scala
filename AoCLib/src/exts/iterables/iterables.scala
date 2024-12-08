@@ -33,3 +33,6 @@ extension [A](it: Iterable[A])
 
   def second: A = it.tail.head
   def first: A = it.head
+
+extension [A](v: Vector[A])
+  def middle: A = v(v.size / 2)
