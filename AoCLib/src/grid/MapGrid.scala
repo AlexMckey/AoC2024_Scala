@@ -1,7 +1,7 @@
 package grid
 
 import common.Default
-import coord.{Pos, given}
+import coord.{Dir, Pos, given}
 import coord.Dir.*
 import box.Box
 import common.Default.default

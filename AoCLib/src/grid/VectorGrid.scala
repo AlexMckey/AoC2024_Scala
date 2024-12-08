@@ -2,12 +2,13 @@ package grid
 
 import common.Default
 import common.Default.default
-import coord.{Pos, given}
-import coord.Dir.*
+import coord.{Dir, Pos, given}
 import box.Box
 import exts.*
 import grid.Direction.*
 import parse.Read
+
+import scala.util.matching.Regex
 
 class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) extends Grid[A]:
   override lazy val minPos: Pos = Pos.zero
@@ -60,8 +61,8 @@ class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) ex
                         .collectFirst {
                           case (c, x) if fp(Pos(x, y), c) => Pos(x, y) })
         .collectFirst { case Some(p) => p }
-  override def filter(f: A => Boolean): Grid[A] = MapGrid(iterator.filterNot((_,a) => f(a)).toMap)
-  override def filter(ff: (Pos, A) => Boolean): Grid[A] = MapGrid(iterator.filterNot(ff.tupled).toMap)
+  override def filter(f: A => Boolean): Grid[A] = MapGrid(iterator.filter((_,a) => f(a)).toMap)
+  override def filter(ff: (Pos, A) => Boolean): Grid[A] = MapGrid(iterator.filter(ff.tupled).toMap)
 
   override def row(r: Int): Seq[A] =
     if r >= minPos.y && r <= maxPos.y

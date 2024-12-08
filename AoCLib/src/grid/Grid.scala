@@ -1,11 +1,12 @@
 package grid
 
 import common.{Default, given}
-import common.Default.default
-import coord.{Neighbor, Pos, given}
+import coord.{Dir, Neighbor, Pos, given}
 import box.Box
-import graph.{ DFS, BFS, AStar }
+import graph.{AStar, BFS, DFS}
 import Direction.*
+
+import scala.util.matching.Regex
 
 enum Direction:
   case Row, Column
@@ -32,6 +33,7 @@ abstract class Grid[A : Default] derives CanEqual:
   def apply(p: Pos): A
   def get(p: Pos): Option[A]
   def getOrElse(p: Pos, orElse: A): A
+  def isEq(p: Pos, a: A): Boolean = get(p).contains(a)
 
   def map[B](f: A => B): Grid[B]
   def mapWithPos[B](f: (Pos, A) => B): Grid[B]
@@ -51,6 +53,13 @@ abstract class Grid[A : Default] derives CanEqual:
   def find(a: A): Option[Pos] = find((_, c) => c == a)
   def find(a: A => Boolean): Option[Pos] = find((_, c) => a(c))
   def find(a: (Pos, A) => Boolean): Option[Pos]
+  def findAll(length: Int, regex: Regex, directions: List[Dir] = List(Dir.E)): Iterator[Pos] =
+    for
+      pos <- allPos.iterator
+      direction <- directions.iterator
+      string = Iterator.iterate(pos)(_ + direction.delta).take(length).flatMap(get).mkString
+      if string.length == length && regex.matches(string)
+    yield pos
   def filter(f: A => Boolean): Grid[A]
   def filter(ff: (Pos, A) => Boolean): Grid[A]
 
