@@ -8,9 +8,14 @@ import scala.annotation.tailrec
 
 case class Num(n: Long)
 
-case class Pars(ls: List[Num ~ """(?:(\d+)\s*)"""] - " ")
+case class Pars(ls: List[Num])
 
-type I = List[Pars ~ """\S+:\s*(.*)"""] - "\n"
+type I = List[Pars]
+
+given Read[Num] = Read("""(?:(\d+)\s*)""".r)
+given Read[List[Num]] = Read(" ")
+given Read[Pars] = Read("""\S+:\s*(.*)""".r)
+given Read[I] = Read("\n")
 
 object Day06 extends DayOf2023[I](6, "Wait For It"):
 
