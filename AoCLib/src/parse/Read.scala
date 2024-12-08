@@ -1,7 +1,16 @@
 package parse
 
+import scala.reflect.ClassTag
+import scala.util.matching.Regex
+
 trait Read[A]:
   def read(input: String): A
+
+  def map[B](f: A => B): Read[B] =
+    val readA = read
+    new Read[B]:
+      def read(input: String): B =
+        f(readA(input))
 
 given Read[Int] with
   def read(input: String): Int =
@@ -21,10 +30,26 @@ given Read[String] with
 
 given Read[Char] with
   def read(input: String): Char =
-    if input.length == 1
-    then input.head
+    if input.length == 1 then input.head
     else throw new Exception(s"Unable to parse $input into a Char")
 
 //given Read[Json] with
 //  def read(input: String): Json =
 //    parse(input).getOrElse(throw new Exception(s"Unable to parse $input as Json"))
+
+object Read:
+  def apply[T <: Product : ReadProduct](regex: Regex): Read[T] = new Read[T]:
+    def read(input: String): T =
+      regex.unapplySeq(input) match
+        case Some(fields) => summon[ReadProduct[T]].readProduct(fields.toArray)
+        case None => throw new Exception(s"Regex '${regex.regex}' did not match '$input'")
+
+  def apply[T <: Product : ReadProduct](delimiter: String): Read[T] = new Read[T]:
+    def read(input: String): T =
+      summon[ReadProduct[T]]
+        .readProduct(input.split(delimiter))
+
+  def apply[C[_] : ReadSeq, T: Read : ClassTag](delimiter: String): Read[C[T]] = new Read[C[T]]:
+    def read(input: String): C[T] =
+      summon[ReadSeq[C]]
+        .readSeq[T](input.split(delimiter))
