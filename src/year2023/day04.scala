@@ -3,10 +3,14 @@ package year2023.day04
 import year2023.DayOf2023
 import parse.{*, given}
 
-case class Card(id: Int, you: List[Int] - "\\s+", win: List[Int] - "\\s+"):
+case class Card(id: Int, you: List[Int], win: List[Int]):
   def winSize: Int = win.intersect(you).size
 
-type I = List[Card ~ """Card\s+(.*): (.*) \| (.*)"""] - "\n"
+type I = List[Card]
+
+given Read[List[Int]] = Read("\\s+")
+given Read[Card] = Read("""Card\s+(.*): (.*) \| (.*)""".r)
+given Read[I] = Read("\n")
 
 object Day04 extends DayOf2023[I](4, "Scratchcards"):
 

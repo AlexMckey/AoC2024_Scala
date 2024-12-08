@@ -1,4 +1,4 @@
-package year2023.day09
+package year2023.day09_
 
 import year2023.DayOf2023
 import parse.{*, given}

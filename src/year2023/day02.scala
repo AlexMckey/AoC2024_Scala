@@ -12,10 +12,10 @@ case class Cube(cnt: Int, color: String) extends Possible:
     case "green" => cnt <= 13
     case "blue" => cnt <= 14
 
-case class Round(cubes: List[Cube ~ """(\d+) (.+)"""] - ", ") extends Possible:
+case class Round(cubes: List[Cube]) extends Possible:
   def isValid: Boolean = cubes.forall(_.isValid)
 
-case class Game(id: Int, rounds: List[Round ~ """(.+)"""] - "; ") extends Possible:
+case class Game(id: Int, rounds: List[Round]) extends Possible:
   def isValid: Boolean = rounds.forall(_.isValid)
   def power: Int = rounds
     .flatMap(r => r.cubes)
@@ -23,7 +23,14 @@ case class Game(id: Int, rounds: List[Round ~ """(.+)"""] - "; ") extends Possib
     .values
     .product
 
-type I = List[Game ~ """Game (\d+): (.+)"""] - "\n"
+type I = List[Game]
+
+given Read[Cube] = Read("""(\d+) (.+)""".r)
+given lc: Read[List[Cube]] = Read(", ")
+given Read[Round] = Read("""(.+)""".r)
+given Read[List[Round]] = Read("; ")
+given Read[Game] = Read("""Game (\d+): (.+)""".r)
+given Read[I] = Read("\n")
 
 object Day02 extends DayOf2023[I](2, "Cube Conundrum"):
 

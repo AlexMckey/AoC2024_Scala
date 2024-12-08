@@ -17,7 +17,10 @@ case class Dig(dir: String, cnt: Int, color: String):
     val dir = "RDLU"(d.toInt)
     Dig(dir.toString, coord.hex2int, "")
     
-type DataType = List[Dig ~ """([RLDU]) (\d+) \(#([\dabcdef]+)\)"""] - "\n"
+type DataType = List[Dig]
+
+given Read[Dig] = Read("""([RLDU]) (\d+) \(#([\dabcdef]+)\)""")
+given Read[DataType] = Read("\n")
 
 object Day18 extends DayOf2023[DataType](18, "Lavaduct Lagoon"):
 

@@ -4,7 +4,9 @@ import year2023.DayOf2023
 import parse.{*, given}
 import scala.collection.mutable
 
-type I = List[String] - ","
+type I = List[String]
+
+given Read[I] = Read(",")
 
 object Day15 extends DayOf2023[I](15, "Lens Library"):
 

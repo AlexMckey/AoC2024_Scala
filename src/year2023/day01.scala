@@ -3,11 +3,11 @@ package year2023.day01
 import year2023.DayOf2023
 import parse.{*, given}
 
-type I = List[String] - "\n"
+given Read[List[String]] = Read("\n")
 
-object Day01 extends DayOf2023[I](1, "Trebuchet?!"):
+object Day01 extends DayOf2023[List[String]](1, "Trebuchet?!"):
   
-  def part(strs: I, pattern: String): Int =
+  def part(strs: List[String], pattern: String): Int =
     val numsL = pattern.split('|')
     strs.map(x =>
         val l1 = pattern.r.findFirstMatchIn(x).get.group(0)
@@ -17,11 +17,11 @@ object Day01 extends DayOf2023[I](1, "Trebuchet?!"):
         s"$a$b".toInt)
       .sum
 
-  override def part1(strs: I): Int =
+  override def part1(strs: List[String]): Int =
     val nums = "0|1|2|3|4|5|6|7|8|9"
     part(strs, nums)
 
-  override def part2(strs: I): Int =
+  override def part2(strs: List[String]): Int =
     val nums = "0|1|2|3|4|5|6|7|8|9|zero|one|two|three|four|five|six|seven|eight|nine"
     part(strs, nums)
 

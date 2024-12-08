@@ -7,8 +7,11 @@ import parse.{*, given}
 import coord.{Coord, Pos, given}
 import grid.{CharGrid, Grid, MapGrid}
 
-type Image = List[String] - "\n"
-type DataType = List[Image] - "\n\n"
+type Image = List[String]
+type DataType = List[Image]
+
+given Read[Image] = Read("\n")
+given Read[DataType] = Read("\\nn")
 
 object Day13 extends DayOf2023[DataType](13, "Point of Incidence"):
 
