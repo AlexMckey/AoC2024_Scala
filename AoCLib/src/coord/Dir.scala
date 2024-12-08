@@ -5,18 +5,30 @@ enum Dir(val delta: Pos):
   case E extends Dir(Pos(1, 0))
   case S extends Dir(Pos(0, 1))
   case W extends Dir(Pos(-1, 0))
+  case NE extends Dir(Pos(1, -1))
+  case SE extends Dir(Pos(1, 1))
+  case NW extends Dir(Pos(-1, -1))
+  case SW extends Dir(Pos(-1, 1))
 
   def left: Dir = this match
     case N => W
     case E => N
     case S => E
     case W => S
+    case NE => NW
+    case NW => SW
+    case SW => SE
+    case SE => NE
 
   def right: Dir = this match
     case N => E
     case E => S
     case S => W
     case W => N
+    case NE => SE
+    case SE => SW
+    case SW => NW
+    case NW => NE
 
   def flip: Dir = left.left
 
@@ -39,6 +51,11 @@ object Dir:
       Dir.values.map(d => d -> d.delta).find(_._2 == p) match
         case Some((d, _)) => d
         case _ => throw new IllegalArgumentException("Неверная позиция для напрвления")
+
+import Dir._
+val axisDirs = List(N,E,S,W)
+val diagDirs = List(NE,SE,SW,NW)
+val allDirs = axisDirs ++ diagDirs
 
 object GridDir:
   val L: Dir = Dir.W
