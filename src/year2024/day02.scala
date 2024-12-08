@@ -5,7 +5,10 @@ import parse.{*, given}
 
 import scala.annotation.tailrec
 
-type I = List[List[Int] - " "] - "\n"
+type I = List[List[Int]]
+
+given Read[List[Int]] = Read(" ")
+given Read[I] = Read("\n")
 
 object Day02 extends DayOf2024[I](2, "Red-Nosed Reports"):
 

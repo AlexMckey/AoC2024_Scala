@@ -4,7 +4,10 @@ import year2024.DayOf2024
 import parse.{*, given}
 import exts.iterables.countItems
 
-type I = List[List[Int] - """\s+"""] - "\n"
+type I = List[List[Int]]
+
+given Read[List[Int]] = Read("\\s+")
+given Read[I] = Read("\n")
 
 object Day01 extends DayOf2024[I](1, "Historian Hysteria"):
 
