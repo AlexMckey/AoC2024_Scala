@@ -1,4 +1,4 @@
-package graph
+package traverse
 
 import scala.collection.mutable
 

@@ -1,4 +1,4 @@
-package graph
+package traverse
 
 import scala.annotation.tailrec
 import scala.collection.mutable
