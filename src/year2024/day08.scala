@@ -11,7 +11,7 @@ type I = CharGrid
 
 object Day08 extends DayOf2024[I](8, "Resonant Collinearity"):
 
-  def oneAntinodes(a1: Pos, a2: Pos)(using g: CharGrid): Set[Pos] =
+  def twoAntinodes(a1: Pos, a2: Pos)(using g: CharGrid): Set[Pos] =
     val d = a2 - a1
     Set(a1 - d, a2 + d).filter(g.contains)
 
@@ -38,7 +38,7 @@ object Day08 extends DayOf2024[I](8, "Resonant Collinearity"):
 
   override def part1(antennas: I): Int =
     given CharGrid = antennas
-    part(antennas, oneAntinodes)
+    part(antennas, twoAntinodes)
 
   override def part2(antennas: I): Long =
     given CharGrid = antennas
