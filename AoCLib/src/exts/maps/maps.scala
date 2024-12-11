@@ -38,3 +38,6 @@ extension [K, B <: A, C <: A](left: Map[K, B])
 extension [K, V](map: Map[K, V])(using V: Numeric[V])
   def plusAt(key: K, delta: V = V.one): Map[K, V] =
     map + (key -> V.plus(map.getOrElse(key, V.zero), delta))
+
+  def minusAt(key: K, delta: V = V.one): Map[K, V] =
+    map + (key -> V.minus(map.getOrElse(key, V.zero), delta))
