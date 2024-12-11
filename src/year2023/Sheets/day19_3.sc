@@ -52,12 +52,12 @@ extension (s: String)
   def asRule: Rule = s match
     case s"$name{$ps}" => name -> ps.split(",").map(_.asPredicate)
 
-extension (is: CatIntervals)
-  def adjustPredicate(p: Predicate): (RuleIntervals, CatIntervals) =
-    val cat = p match
-      case Cond(cat, '>', num, rule) if is(cat).contains(num) =>
-      case Cond(cat, '<', num, rule) =>
-      case DefaultRule(rule) => (rule -> is) -> is
+//extension (is: CatIntervals)
+//  def adjustPredicate(p: Predicate): (RuleIntervals, CatIntervals) =
+//    val cat = p match
+//      case Cond(cat, '>', num, rule) if is(cat).contains(num) =>
+//      case Cond(cat, '<', num, rule) => (rule -> is) -> is
+//      case DefaultRule(rule) => (rule -> is) -> is
 
 type Input = (Rules, Seq[Part])
 

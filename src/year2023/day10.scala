@@ -5,7 +5,7 @@ import common.Default
 import common.Default.default
 import parse.{*, given}
 import exts.*
-import coord.{Dir, Neighbor, Pos, given}
+import coord.{Dir, Neighbors, Pos, given}
 import Dir.*
 import grid.{CharGrid, Grid, VectorGrid}
 import VectorGrid.charVectorGridReader
@@ -22,7 +22,7 @@ object Day10 extends DayOf2023[CharGrid](10, "Pipe Maze"):
     val startNears = start.nearAxis.filter(n => nearPipes(n, g(n)).contains(start)).map(_ - start).toSet
     val startChar  = pipes.map(_.swap)(startNears.map(asDir))
     val newG       = g.updated(start, startChar)
-    given Neighbor[Char] with
+    given Neighbors[Char] with
       override def neighbors(p: Pos, a: Char): Iterator[Pos] = nearPipes(p, a)
     val path = newG.dfs(start)._1
     VectorGrid(path.map((p,_) => p -> newG(p)))

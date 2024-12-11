@@ -1,8 +1,8 @@
 import exts.*
 import grid.{CharGrid, MapGrid}
-import graph.BFSExt
-import coord.{Pos, Neighbor, given}
+import coord.{Pos, Neighbors, given}
 import coord.Dir
+import traverse.BFSExt
 
 val s =
   ".|...\\....\n|.-.\\.....\n.....|-...\n........|.\n..........\n.........\\\n..../.\\\\..\n.-.-/..|..\n.|....-|.\\\n..//.|...."

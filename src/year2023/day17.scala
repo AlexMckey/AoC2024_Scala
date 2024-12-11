@@ -5,7 +5,7 @@ import common.Default
 import parse.{*, given}
 import coord.{Dir, Pos, given}
 import grid.{CharGrid, VectorGrid}
-import graph.Dijkstra
+import traverse.Dijkstra
 
 import scala.annotation.tailrec
 

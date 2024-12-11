@@ -5,7 +5,7 @@ import common.Default
 import common.Default.default
 import parse.{*, given}
 import exts.*
-import coord.{Dir, Neighbor, Pos, given}
+import coord.{Dir, Neighbors, Pos, given}
 import grid.{CharGrid, Grid, MapGrid}
 
 object Day11__ extends DayOf2023[CharGrid](11, "Cosmic Expansion"):
@@ -27,7 +27,7 @@ object Day11__ extends DayOf2023[CharGrid](11, "Cosmic Expansion"):
     val gbx = g.map(_.x).max
     val gby = g.map(_.y).max
     g.combinations(2)
-      .map(g => g.head manhattan g.last)
+      .map(g => g.head.manhattan(g.last))
       .map(_.toLong)
       .sum
 

@@ -5,13 +5,13 @@ import common.Default
 import common.Default.default
 import parse.{*, given}
 import exts.*
-import coord.{Dir, Neighbor, Pos, given}
+import coord.{Dir, Neighbors, Pos, given}
 import Dir.*
 import grid.{CharGrid, Grid, VectorGrid}
 import geometry.Geometry.*
-import graph.DFS.*
 import VectorGrid.charVectorGridReader
-import graph.DFS
+import traverse.DFS
+import traverse.DFS.*
 
 case class Path(g: CharGrid):
   given Default[Char] = '.'
@@ -34,7 +34,7 @@ case class Path(g: CharGrid):
     val startNears = start.nearAxis.filter(n => nearPipes(n, g(n)).contains(start)).map(_ - start).toSet
     val startChar = pipes.map(_.swap)(startNears.map(asDir))
     val newG = g.updated(start, startChar)
-    given Neighbor[Char] with
+    given Neighbors[Char] with
       override def neighbors(p: Pos, a: Char): Iterator[Pos] = nearPipes(p, a)
     newG.dfs(start)._2
 

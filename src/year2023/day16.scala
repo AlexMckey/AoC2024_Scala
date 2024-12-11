@@ -4,8 +4,8 @@ import year2023.DayOf2023
 import common.Default
 import parse.{*, given}
 import coord.{Dir, Pos, given}
-import graph.BFSExt
 import grid.{CharGrid, VectorGrid}
+import traverse.BFSExt
 
 given Default[Char] = '.'
 
