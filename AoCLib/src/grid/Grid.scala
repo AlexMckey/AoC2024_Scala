@@ -1,10 +1,12 @@
 package grid
 
 import common.{Default, given}
-import coord.{Dir, Neighbor, Pos, given}
+import coord.{Dir, Neighbors, Pos, given}
 import box.Box
-import graph.{AStar, BFS, DFS}
 import Direction.*
+import struct.VTree
+import traverse.other.AStar
+import traverse.{AStar, BFS, DFS}
 
 import scala.util.matching.Regex
 
@@ -45,7 +47,7 @@ abstract class Grid[A : Default] derives CanEqual:
 
   def values: Seq[A]
   def count(a: A => Boolean): Int
-  def neighborCount(pos: Pos, p: A => Boolean)(using N: Neighbor[A]): Int =
+  def neighborCount(pos: Pos, p: A => Boolean)(using N: Neighbors[A]): Int =
     N.neighbors(pos, apply(pos)).toList.map(get.andThen(_.map(p))).count(_.getOrElse(false))
   def sum(using Numeric[A]): A
   def allPos: Set[Pos]
@@ -60,6 +62,7 @@ abstract class Grid[A : Default] derives CanEqual:
       string = Iterator.iterate(pos)(_ + direction.delta).take(length).flatMap(get).mkString
       if string.length == length && regex.matches(string)
     yield pos
+  def findAll(a: A): Iterator[Pos]  
   def filter(f: A => Boolean): Grid[A]
   def filter(ff: (Pos, A) => Boolean): Grid[A]
 
@@ -83,8 +86,16 @@ abstract class Grid[A : Default] derives CanEqual:
   def +(cell: (Pos, A)): Grid[A]
   def keepOnlyInPositions(positions: Set[Pos]): Grid[A]
   
-  def dfs(start: Pos)(using N: Neighbor[A]): (Map[Pos, Int], Seq[Pos]) =
+  def dfs(start: Pos)(using N: Neighbors[A]): (Map[Pos, Int], Seq[Pos]) =
     DFS.traverse(start, p => N.neighbors(p, apply(p)).filter(gridBox.contains))
 
-  def bfs(start: Pos)(using N: Neighbor[A]): Map[Pos, Int] =
+  def bfs(start: Pos)(using N: Neighbors[A]): Map[Pos, Int] =
     BFS.traverse(start, p => N.neighbors(p, apply(p)).filter(gridBox.contains))
+
+  def vTree(obstacle: A => Boolean)(using N: Neighbors[A]): VTree[Pos] = new VTree[Pos]:
+    override def children(node: Pos, visited: Set[Pos]): Iterator[Pos] =
+      val allNeighbors = N.neighbors(node, apply(node)).filter(contains).filterNot(pos => obstacle(apply(pos)))
+      allNeighbors.filterNot(visited.contains).iterator
+
+  def aStar(goal: Pos, obstacle: A => Boolean)(using N: Neighbors[A]): AStar[Pos, Int] =
+    new AStar[Pos, Int](_ == goal, _.manhattan(goal), (_, _) => 1, 0, p => N.neighbors(p, apply(p)).toSet.filter(contains).filterNot(pos => obstacle(apply(pos))))

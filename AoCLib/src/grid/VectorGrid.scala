@@ -61,6 +61,7 @@ class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) ex
                         .collectFirst {
                           case (c, x) if fp(Pos(x, y), c) => Pos(x, y) })
         .collectFirst { case Some(p) => p }
+  override def findAll(a: A): Iterator[Pos] = iterator.filter(_._2 == a).map(_._1)
   override def filter(f: A => Boolean): Grid[A] = MapGrid(iterator.filter((_,a) => f(a)).toMap)
   override def filter(ff: (Pos, A) => Boolean): Grid[A] = MapGrid(iterator.filter(ff.tupled).toMap)
 

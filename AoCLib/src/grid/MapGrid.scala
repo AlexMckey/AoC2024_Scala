@@ -68,6 +68,7 @@ class MapGrid[A : Default] private(protected val cells: Map[Pos, A]) extends Gri
   override def allPos: Set[Pos] = cells.keySet
 
   override def find(fp: (Pos, A) => Boolean): Option[Pos] = cells.find(fp.tupled).map(_._1)
+  override def findAll(a: A): Iterator[Pos] = cells.filter(_._2 == a).keysIterator
   override def filter(p: A => Boolean): Grid[A] =
     new MapGrid(cells.filter((_, char) => p(char)))
   override def filter(ff: (Pos, A) => Boolean): Grid[A] =
