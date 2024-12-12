@@ -24,7 +24,7 @@ object Day11_new extends DayOf2023[CharGrid](11, "Cosmic Expansion"):
   private def calcDistances(g: CharGrid): Long =
     g.allPos.toSeq
       .combinations(2)
-      .map(g => g.head manhattan g.last)
+      .map(g => g.head.manhattan(g.last))
       .map(_.toLong)
       .sum
 
