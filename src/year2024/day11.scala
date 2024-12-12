@@ -40,7 +40,7 @@ object Day11 extends DayOf2024[I](11, "Plutonian Pebbles"):
     countBlinkedStones(stones, 25)
 
   override def part2(stones: I): Long =
-  countBlinkedStones(stones, 75)
+    countBlinkedStones(stones, 75)
 
 //Day 11: Plutonian Pebbles
 //  parse : 13.2ms
