@@ -79,7 +79,7 @@ class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) ex
       case Row => i >= minPos.y && i <= maxPos.y
       case Column => i >= minPos.x && i <= maxPos.x
 
-  override def remove(i: Int, seq: Direction): Grid[A] =
+  override def remove(seq: Direction)(i: Int): Grid[A] =
     if !checkRange(seq)(i)
     then this
     else seq match
@@ -91,7 +91,7 @@ class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) ex
           val (l,r) = row.splitAt(i)
           l ++ r.tail))
 
-  override def clear(i: Int, seq: Direction): Grid[A] =
+  override def clear(seq: Direction)(i: Int): Grid[A] =
     if !checkRange(seq)(i)
     then this
     else seq match
@@ -113,6 +113,8 @@ class VectorGrid[A : Default] private (protected val grid: Vector[Vector[A]]) ex
   override def toVectorGrid: VectorGrid[A] = this
 
   override def --(xs: Set[Pos]): Grid[A] = toMapGrid -- xs
+  override def -(cell: Pos): Grid[A] = toMapGrid - cell
+  override def ++(xs: Set[(Pos,A)]): Grid[A] = toMapGrid ++ xs
   override def +(cell: (Pos, A)): Grid[A] = toMapGrid + cell
   override def keepOnlyInPositions(positions: Set[Pos]): Grid[A] = toMapGrid.keepOnlyInPositions(positions)
 
@@ -132,18 +134,19 @@ object VectorGrid:
     val ch = default[Char]
     apply(s.asStrs.map(_.toCharArray.toVector).toVector)
 
-//  extension [A: Default](g: VectorGrid[A])
+  extension [A: Default](g: VectorGrid[A])
 //    def flattenGrid[B](using asGrid: A => Grid[B]): Grid[B] =
 //      VectorGrid(g.map(asGrid).toVectorGrid.grid.flatMap(_.transpose.map(_.flatten)))
 //
 //  def groupedGrid(groupSize: Int): Grid[Grid[A]] =
 //    grid.grouped(groupSize).map(_.map(_.grouped(groupSize).toVector).transpose).toVector
-//
-//  def slidingGrid(size: Pos): Iterator[Iterator[Grid[A]]] =
-//    grid.sliding(size.y).map(_.map(_.sliding(size.x).toVector).transpose.iterator)
-//
-//  def slidingGrid(size: Int): Iterator[Iterator[Grid[A]]] = slidingGrid(Pos(size, size))
-//
+
+    def slidingGrid(size: Pos): Iterator[Iterator[Grid[A]]] =
+      val res = g.grid.sliding(size.y).map(_.map(_.sliding(size.x).toVector).transpose.iterator)
+      res.map(_.map(VectorGrid.apply))
+
+    def slidingGrid(size: Int): Iterator[Iterator[Grid[A]]] = g.slidingGrid(Pos(size, size))
+
 //  def correspondsGrid[B](otherGrid: Grid[B])(p: (A, B) => Boolean): Boolean =
 //    grid.corresponds(otherGrid)(_.corresponds(_)(p))
 //

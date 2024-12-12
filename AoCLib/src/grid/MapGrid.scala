@@ -83,14 +83,14 @@ class MapGrid[A : Default] private(protected val cells: Map[Pos, A]) extends Gri
     then (minRow to maxRow).map(row => cells.getOrElse(Pos(c, row), default[A]))
     else Seq.empty
 
-  override def remove(i: Int, seq: Direction): Grid[A] =
+  override def remove(seq: Direction)(i: Int): Grid[A] =
     val (fp, td) = seq match
       case Row    => ((p: Pos) => p.y, N)
       case Column => ((p: Pos) => p.x, W)
     val (l,r) = cells.partition((p,_) => fp(p) <= i)
     new MapGrid(l.filterNot((p,_) => fp(p) == i) ++ r.map((p,v) => p.toDir(td) -> v))
 
-  override def clear(i: Int, seq: Direction): Grid[A] =
+  override def clear(seq: Direction)(i: Int): Grid[A] =
     val ff: Pos => Int = seq match
       case Row    => _.y
       case Column => _.x
@@ -107,8 +107,12 @@ class MapGrid[A : Default] private(protected val cells: Map[Pos, A]) extends Gri
 //    new MapGrid(cells.map((pos, char) => (Pos.fromAffine(m * pos.toAffine), char)))
   override def --(xs: Set[Pos]): Grid[A] =
     new MapGrid(cells -- xs)
+  override def -(cell: Pos): Grid[A] =
+    new MapGrid(cells -- Set(cell))
+  override def ++(xs: Set[(Pos, A)]): Grid[A] =
+    new MapGrid(cells ++ xs)
   override def +(cell: (Pos, A)): Grid[A] =
-    new MapGrid(cells + cell)
+    new MapGrid(cells + cell)  
   override def keepOnlyInPositions(positions: Set[Pos]): Grid[A] =
     new MapGrid(allPos.intersect(positions).map(p => p -> cells(p)).toMap)
   //new MapGrid(g.cells.filter((pos, _) => positions.contains(pos)))  

@@ -72,8 +72,8 @@ abstract class Grid[A : Default] derives CanEqual:
     (gridBox.min.y to gridBox.max.y).iterator.map(row)
   def cols: Iterator[Seq[A]] =
     (gridBox.min.x to gridBox.max.x).iterator.map(col)
-  def remove(i: Int, seq: Direction): Grid[A]
-  def clear(r: Int, seq: Direction): Grid[A]
+  def remove(seq: Direction)(i: Int): Grid[A]
+  def clear(seq: Direction)(r: Int): Grid[A]
 
   def iterator: Iterator[(Pos, A)]
   def iteratorAll: Iterator[(Pos, A)]
@@ -82,8 +82,10 @@ abstract class Grid[A : Default] derives CanEqual:
   def toVectorGrid: VectorGrid[A]
 
 //  def transform(m: Matrix[3, 3, Int]): Grid[A]
+  def -(xs: Pos): Grid[A]
   def --(xs: Set[Pos]): Grid[A]
   def +(cell: (Pos, A)): Grid[A]
+  def ++(cells: Set[(Pos, A)]): Grid[A]
   def keepOnlyInPositions(positions: Set[Pos]): Grid[A]
   
   def dfs(start: Pos)(using N: Neighbors[A]): (Map[Pos, Int], Seq[Pos]) =

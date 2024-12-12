@@ -1,8 +1,12 @@
-import AoCLib.{ Default, charDefault }
-import AoCLib.coord.{ Pos, nearNeighbors }
-import AoCLib.grid.{Grid, MapGrid}
-import AoCLib.grid.Direction.{Column, Row}
-import AoCLib.exts.*
+null.asInstanceOf[Int]
+null.asInstanceOf[Char]
+
+import common.Default
+import Default.charDefaults
+import coord.{ Pos, nearNeighbors }
+import grid.{Grid, MapGrid}
+import grid.Direction.{Column, Row}
+import exts.*
 
 val s = "123\n021\n412\n531"
 
@@ -62,11 +66,11 @@ ge.col(5)
 
 ge.cols.toList
 
-ge.remove(1, Row)
-ge.remove(0, Column)
+ge.remove(Row)(1)
+ge.remove(Column)(0)
 
-ge.clear(1, Row)
-ge.clear(2, Column)
+ge.clear(Row)(1)
+ge.clear(Column)(2)
 
 ge.transpose
 ge.rotateCW()
@@ -93,11 +97,11 @@ gd.col(5)
 
 gd.cols.toList
 
-gd.remove(1, Row)
-gd.remove(3, Column)
+gd.remove(Row)(1)
+gd.remove(Column)(3)
 
-gd.clear(1, Row)
-gd.clear(2, Column)
+gd.clear(Row)(1)
+gd.clear(Column)(2)
 
 gd.transpose
 
@@ -105,7 +109,7 @@ gd -- Set(p1, p2)
 
 val ga = gd + (Pos(3,3),'7') + (Pos(3,2),'1')
 
-import AoCLib.coord.pos
+import coord.pos
 
 val p3 = Pos(2,2)
 p3.nearAll.toList.map(ga.get.andThen(_.map(_ == '1'))).count(_.getOrElse(false))
