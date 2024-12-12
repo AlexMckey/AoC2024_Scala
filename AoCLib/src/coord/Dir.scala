@@ -52,10 +52,10 @@ object Dir:
         case Some((d, _)) => d
         case _ => throw new IllegalArgumentException("Неверная позиция для напрвления")
 
-import Dir._
-val axisDirs = List(N,E,S,W)
-val diagDirs = List(NE,SE,SW,NW)
-val allDirs = axisDirs ++ diagDirs
+  import Dir._
+  val axisDirs: Seq[Dir] = List(N,E,S,W)
+  val diagDirs: Seq[Dir] = List(NE,SE,SW,NW)
+  val allDirs: Seq[Dir] = axisDirs ++ diagDirs
 
 object GridDir:
   val L: Dir = Dir.W

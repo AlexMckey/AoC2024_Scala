@@ -4,7 +4,8 @@ import year2024.DayOf2024
 import parse.{*, given}
 import grid.*
 import MapGrid.charMapGridReader
-import coord.{Pos, allDirs, diagDirs, given}
+import coord.{Pos, Dir, given}
+import Dir.{allDirs, diagDirs}
 
 type I = CharGrid
 
