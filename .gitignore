@@ -1,4 +1,5 @@
 .DS_Store
+.gigaide
 *.class
 *.tasty
 *.log
@@ -28,4 +29,3 @@ classes/
 
 out/
 lib/
-
