@@ -1,5 +1,7 @@
 package coord
 
+import parse.Read
+
 import scala.io.AnsiColor.*
 
 case class Pos(x: Int, y: Int) derives CanEqual:
@@ -37,6 +39,8 @@ given pos: Coord[Pos] with
     def axis: Seq[Int] = Seq(v.x, v.y)
   def build(xs: Seq[Item]): Pos = Pos(xs.head, xs.last)
   val size: Int = 2
+
+given posRead: Read[Pos] = Coord.of(_)
 
 //given posOrdering: Ordering[Pos] with
 //  override def compare(p1: Pos, p2: Pos): Int =
