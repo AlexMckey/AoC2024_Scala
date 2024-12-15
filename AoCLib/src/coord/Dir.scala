@@ -1,6 +1,6 @@
 package coord
 
-enum Dir(val delta: Pos):
+enum Dir private(val delta: Pos):
   case N extends Dir(Pos(0, -1))
   case E extends Dir(Pos(1, 0))
   case S extends Dir(Pos(0, 1))
@@ -60,6 +60,14 @@ object Dir:
 object GridDir:
   val L: Dir = Dir.W
   val R: Dir = Dir.E
-  val U: Dir = Dir.S
-  val D: Dir = Dir.N
-  export Dir.*
+  val U: Dir = Dir.N
+  val D: Dir = Dir.S
+
+  extension (ch: Char)
+    def asGridDir: Dir = ch match
+      case '^' => U
+      case '>' => R
+      case 'v' => D
+      case '<' => L
+      case _   => throw new IllegalArgumentException("Unknown direction")
+    //export Dir.*

@@ -15,7 +15,9 @@ case class Pos(x: Int, y: Int) derives CanEqual:
   def cross(that: Pos): Long = x.toLong * that.y - that.x.toLong * y
   def pair: (Int, Int) = x -> y
   def swap: Pos = Pos(y, x)
+  
   def toDir(d: Dir): Pos = this + d.delta
+  def toDir(d: Dir, cnt: Int): Pos = this + d.delta * cnt
 
 object Pos:
   private def simpleRender: Pos => String = _ => s"$WHITE_B#"
@@ -31,7 +33,7 @@ object Pos:
     println()
   def zero: Pos = Coord.zero[Pos]
   extension (pr: (Int, Int))
-    def toPos: Pos = Pos(pr._1, pr._2)
+    def asPos: Pos = Pos(pr._1, pr._2)
 
 given pos: Coord[Pos] with
   type Item = Int
