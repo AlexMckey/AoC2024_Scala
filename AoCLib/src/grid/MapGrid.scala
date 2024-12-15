@@ -8,7 +8,6 @@ import common.Default.default
 import exts.*
 import grid.Direction.{Column, Row}
 import parse.Read
-//import AoCLib.matrix.Matrix
 
 import scala.util.matching.Regex
 
@@ -82,6 +81,9 @@ class MapGrid[A : Default] private(protected val cells: Map[Pos, A]) extends Gri
     if minCol <= c && c <= maxCol
     then (minRow to maxRow).map(row => cells.getOrElse(Pos(c, row), default[A]))
     else Seq.empty
+
+  override def view(seq: Direction)(i: Int): Seq[A] =
+    if seq == Row then row(i) else col(i)
 
   override def remove(seq: Direction)(i: Int): Grid[A] =
     val (fp, td) = seq match

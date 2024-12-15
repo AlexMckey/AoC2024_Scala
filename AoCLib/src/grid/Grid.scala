@@ -72,6 +72,7 @@ abstract class Grid[A : Default] derives CanEqual:
     (gridBox.min.y to gridBox.max.y).iterator.map(row)
   def cols: Iterator[Seq[A]] =
     (gridBox.min.x to gridBox.max.x).iterator.map(col)
+  def view(seq: Direction)(i: Int): Seq[A]
   def remove(seq: Direction)(i: Int): Grid[A]
   def clear(seq: Direction)(r: Int): Grid[A]
 
