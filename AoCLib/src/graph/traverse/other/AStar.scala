@@ -1,4 +1,4 @@
-package traverse.other
+package graph.traverse.other
 
 import struct.PriorityQueue
 

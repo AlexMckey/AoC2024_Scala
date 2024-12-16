@@ -1,4 +1,4 @@
-package traverse
+package graph.traverse.old
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -27,7 +27,7 @@ object BFS:
           if !visitedDistance.contains(newNode)
           then enqueue(newNode, dist + distDelta)
 
-        neighbors(node).iterator.foreach((goNeighbor _).tupled)
+        neighbors(node).iterator.foreach(goNeighbor.tupled)
     end while
 
     visitedDistance.toMap
