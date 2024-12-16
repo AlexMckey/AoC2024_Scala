@@ -4,8 +4,8 @@ import year2023.DayOf2023
 import common.Default
 import parse.{*, given}
 import coord.{Dir, Pos, given}
+import graph.traverse.BFS
 import grid.{CharGrid, VectorGrid}
-import traverse.BFSExt
 
 given Default[Char] = '.'
 
@@ -23,9 +23,10 @@ object Day16 extends DayOf2023[CharGrid](16, "The Floor Will Be Lava"):
       case _                                            => Set(st.d)
     newD.map(d => State(st.p.toDir(d), d)).filter(st => g.gridBox.contains(st.p))
 
-  def energized(g: CharGrid)(start: State): Int = BFSExt(start, neighbors(g)).map(_.p).size
-
-//  override def prep(input: String): CharGrid = VectorGrid(input)
+  def energized(g: CharGrid)(start: State): Int =
+    //BFSExt(start, neighbors(g)).map(_.p).size
+    // реализация этого traverse на порядок быстрее
+    BFS.traverse(start)(neighbors(g)).keySet.map(_.p).size
 
   override def part1(cavern: CharGrid): Int =
     energized(cavern)(State(Pos.zero, Dir.E))
@@ -39,6 +40,6 @@ object Day16 extends DayOf2023[CharGrid](16, "The Floor Will Be Lava"):
     (rs ++ cs).map(energized(cavern)).max
 
 //Day 16: The Floor Will Be Lava
-//  prep: 64.3ms
-//  part 1: 1.50s - 7884
-//  part 2: 339.s - 8185
+//  parse : 15.3ms
+//  part 1: 170.ms -> 7884
+//  part 2: 2.51s -> 8185

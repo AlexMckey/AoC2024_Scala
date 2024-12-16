@@ -1,12 +1,14 @@
+import common.Default
 import exts.*
 import grid.{CharGrid, MapGrid}
-import coord.{Pos, Neighbors, given}
+import coord.{Neighbors, Pos, given}
 import coord.Dir
-import traverse.BFSExt
+import graph.traverse.BFS
 
 val s =
   ".|...\\....\n|.-.\\.....\n.....|-...\n........|.\n..........\n.........\\\n..../.\\\\..\n.-.-/..|..\n.|....-|.\\\n..//.|...."
 
+given Default[Char] = ' '
 given g: CharGrid = MapGrid(s)
 
 case class State(p: Pos, d: Dir)
@@ -30,7 +32,7 @@ val se = "######....\n.#...#....\n.#...#####\n.#...##...\n.#...##...\n.#...##...
 val ge = MapGrid(se)
 ge.count(_ == '#')
 
-val res = BFSExt(start, neighbors).map(_.p).size
+val res = BFS.traverse(start)(neighbors).keySet.size
 
 import line.Line
 
