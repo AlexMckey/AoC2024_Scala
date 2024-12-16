@@ -4,8 +4,8 @@ import year2023.DayOf2023
 import common.Default
 import parse.{*, given}
 import coord.{Dir, Pos, given}
+import graph.traverse.old.Dijkstra
 import grid.{CharGrid, VectorGrid}
-import traverse.Dijkstra
 
 import scala.annotation.tailrec
 

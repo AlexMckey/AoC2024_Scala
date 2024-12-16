@@ -4,10 +4,10 @@ import year2023.DayOf2023
 import common.Default
 import parse.{*, given}
 import coord.{Dir, Pos, given}
+import graph.traverse.old.BFS
 import grid.{CharGrid, VectorGrid}
 import line.Line
 import memo.{*, given}
-import traverse.BFS
 
 import scala.annotation.tailrec
 

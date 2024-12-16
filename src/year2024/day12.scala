@@ -5,7 +5,7 @@ import parse.{*, given}
 import grid.{CharGrid, MapGrid}
 import coord.{Coord, Dir, Pos, pos}
 import box.Box
-import traverse.BFS
+import graph.traverse.old.BFS
 
 type Region = Set[Pos]
 type I = Set[Region]

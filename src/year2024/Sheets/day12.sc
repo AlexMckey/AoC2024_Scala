@@ -4,7 +4,7 @@ import coord.Dir.axisDirs
 import coord.{Coord, Dir, Neighbors, Pos, axisNeighbors, pos}
 import grid.{CharGrid, MapGrid, VectorGrid}
 import exts.iterables.groupCount
-import traverse.BFS
+import graph.traverse.old.BFS
 
 import scala.collection.mutable
 

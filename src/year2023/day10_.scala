@@ -10,8 +10,7 @@ import Dir.*
 import grid.{CharGrid, Grid, VectorGrid}
 import geometry.Geometry.*
 import VectorGrid.charVectorGridReader
-import traverse.DFS
-import traverse.DFS.*
+import graph.traverse.old.DFS
 
 case class Path(g: CharGrid):
   given Default[Char] = '.'
