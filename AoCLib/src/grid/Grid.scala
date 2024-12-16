@@ -4,9 +4,8 @@ import common.{Default, given}
 import coord.{Dir, Neighbors, Pos, given}
 import box.Box
 import Direction.*
+import graph.traverse.{BFS, DFS}
 import struct.VTree
-import traverse.other.AStar
-import traverse.{AStar, BFS, DFS}
 
 import scala.util.matching.Regex
 
@@ -90,15 +89,15 @@ abstract class Grid[A : Default] derives CanEqual:
   def keepOnlyInPositions(positions: Set[Pos]): Grid[A]
   
   def dfs(start: Pos)(using N: Neighbors[A]): (Map[Pos, Int], Seq[Pos]) =
-    DFS.traverse(start, p => N.neighbors(p, apply(p)).filter(gridBox.contains))
+    DFS.traverse(start)(p => N.neighbors(p, apply(p)).filter(gridBox.contains).toSeq)
 
   def bfs(start: Pos)(using N: Neighbors[A]): Map[Pos, Int] =
-    BFS.traverse(start, p => N.neighbors(p, apply(p)).filter(gridBox.contains))
+    BFS.traverse(start)(p => N.neighbors(p, apply(p)).filter(gridBox.contains).toSeq)
 
   def vTree(obstacle: A => Boolean)(using N: Neighbors[A]): VTree[Pos] = new VTree[Pos]:
     override def children(node: Pos, visited: Set[Pos]): Iterator[Pos] =
       val allNeighbors = N.neighbors(node, apply(node)).filter(contains).filterNot(pos => obstacle(apply(pos)))
       allNeighbors.filterNot(visited.contains).iterator
-
-  def aStar(goal: Pos, obstacle: A => Boolean)(using N: Neighbors[A]): AStar[Pos, Int] =
-    new AStar[Pos, Int](_ == goal, _.manhattan(goal), (_, _) => 1, 0, p => N.neighbors(p, apply(p)).toSet.filter(contains).filterNot(pos => obstacle(apply(pos))))
+//
+//  def aStar(goal: Pos, obstacle: A => Boolean)(using N: Neighbors[A]): AStar[Pos, Int] =
+//    new AStar[Pos, Int](_ == goal, _.manhattan(goal), (_, _) => 1, 0, p => N.neighbors(p, apply(p)).toSet.filter(contains).filterNot(pos => obstacle(apply(pos))))
