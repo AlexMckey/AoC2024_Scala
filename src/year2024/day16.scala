@@ -23,13 +23,13 @@ case class Maze(g: CharGrid):
     if w == start
     then Set(w.p)
     else
-      val ds = path(w)
+      val dist = path(w)
       val ps =
         for
-          (oldSt, step) <- ns(_.prev)(w)
-          oldD <- path.get(oldSt)
-          if oldD + step == ds
-        yield backPaths(oldSt) + w.p
+          (oldW, step) <- ns(_.prev)(w)
+          oldDist <- path.get(oldW)
+          if oldDist + step == dist
+        yield backPaths(oldW) + w.p
       ps.foldLeft(Set.empty)(_ ++ _)
 
   def stepCnt: Int = steps
