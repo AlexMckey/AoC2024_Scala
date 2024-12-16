@@ -1,9 +1,9 @@
-package year2024
+package year2024.day15
 
 import year2024.DayOf2024
 import parse.{*, given}
-import grid.{CharGrid, Grid, MapGrid, VectorGrid}
-import coord.{Dir, GridDir, Pos}
+import grid.{CharGrid, Grid, VectorGrid}
+import coord.{GridDir, Pos}
 import GridDir.*
 import coord.Dir.*
 
@@ -102,6 +102,6 @@ object Day15 extends DayOf2024[Input](15, "Warehouse Woes"):
       .g.GPScore('[')
 
 //Day 15: Warehouse Woes
-//  parse : 26.2ms
-//  part 1: 134.ms -> 1516281
-//  part 2: 91.0ms -> 1527969
+//  parse : 24.7ms
+//  part 1: 127.ms -> 1516281
+//  part 2: 91.6ms -> 1527969
