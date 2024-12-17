@@ -8,3 +8,11 @@ extension (s: String)
   def asWords(sep: String = " "): Seq[String] = s.split(sep).toIndexedSeq.filterNot(_.isEmpty)
   def toIntRadix(radix: Int): Int = Integer.parseInt(s, radix)
   def toLongRadix(radix: Int): Long = java.lang.Long.parseLong(s, radix)
+
+object I:
+  def unapply(s: String): Option[Int] = s.toIntOption
+
+  //case s"Register A: ${I(a)}" =>
+
+object L:
+  def unapply(s: String): Option[Long] = s.toLongOption
