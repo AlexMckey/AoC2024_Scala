@@ -16,4 +16,5 @@ case class Box(min: Pos, max: Pos) extends Boxs[Pos, Box](min: Pos, max: Pos):
       y <- (min.y to max.y).iterator
     yield Pos(x, y)
 
-object Box extends BoxFactory[Pos, Box] {}
+object Box extends BoxFactory[Pos, Box]:
+  def apply(p: Pos): Box = Box(Pos.zero, p)
