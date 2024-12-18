@@ -2,6 +2,7 @@ package parse
 
 import scala.compiletime.{erasedValue, summonInline}
 import scala.deriving.Mirror
+import scala.util.matching.Regex
 
 trait ReadProduct[T <: Product]:
   def readProduct(input: Array[String]): T
