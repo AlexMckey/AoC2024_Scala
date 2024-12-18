@@ -12,10 +12,10 @@ case class CPU(regs: Regs, ip: Int = 0, out: List[Int] = List.empty):
       case 6 => regs.c
       case _ => arg
 
-  def exec(prog: Array[Int]): CPU =
+  def exec(prog: List[Int]): CPU =
     if prog.indices.contains(ip)
     then
-      val Array(op, arg) = prog.slice(ip, ip + 2)
+      val List(op, arg) = prog.slice(ip, ip + 2)
       step(op, arg).exec(prog)
     else this
 
@@ -30,7 +30,7 @@ case class CPU(regs: Regs, ip: Int = 0, out: List[Int] = List.empty):
       case 6 => CPU(regs.copy(b = regs.a >> combo(arg)),  ip + 2, out)
       case 7 => CPU(regs.copy(c =  regs.a >> combo(arg)), ip + 2, out)
 
-case class Input(regs: Regs, prog: Array[Int]):
+case class Input(regs: Regs, prog: List[Int]):
   def findQuine(idx: Int, acc: Long): Option[Long] =
     def finder(octet: Int): Option[Long] =
       val candidate = acc * 8 + octet
@@ -42,9 +42,9 @@ case class Input(regs: Regs, prog: Array[Int]):
 
     (0 until 8).toList.map(finder).collectFirst { case Some(a) => a }
 
-given Read[Input] = Read("\n\n")
-given Read[Array[Int]] = s => s.trim.split(" ").last.split(",").map(_.toInt)
-given Read[Regs] = Read(""".+: (\d+)\n.+: (\d+)\n.+: (\d+)""".r)
+given Read[Input] = Read.product("\n\n")
+given Read[List[Int]] = Read.ints
+given Read[Regs] = Read.product(""".+: (\d+)""".r)
 
 object Day17 extends DayOf2024[Input](17, "Chronospatial Computer"):
 

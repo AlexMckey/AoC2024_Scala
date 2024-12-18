@@ -12,10 +12,10 @@ case class Pars(ls: List[Num])
 
 type I = List[Pars]
 
-given Read[Num] = Read("""(?:(\d+)\s*)""".r)
-given Read[List[Num]] = Read(" ")
-given Read[Pars] = Read("""\S+:\s*(.*)""".r)
-given Read[I] = Read("\n")
+given Read[Num] = Read.product("""(?:(\d+)\s*)""".r)
+given Read[List[Num]] = Read.seq(" ")
+given Read[Pars] = Read.product("""\S+:\s*(.*)""".r)
+given Read[I] = Read.seq("\n")
 
 object Day06 extends DayOf2023[I](6, "Wait For It"):
 

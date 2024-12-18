@@ -8,9 +8,9 @@ case class Card(id: Int, you: List[Int], win: List[Int]):
 
 type I = List[Card]
 
-given Read[List[Int]] = Read("\\s+")
-given Read[Card] = Read("""Card\s+(.*): (.*) \| (.*)""".r)
-given Read[I] = Read("\n")
+given Read[List[Int]] = Read.seq("\\s+")
+given Read[Card] = Read.product("""Card\s+(.*): (.*) \| (.*)""".r)
+given Read[I] = Read.seq("\n")
 
 object Day04 extends DayOf2023[I](4, "Scratchcards"):
 

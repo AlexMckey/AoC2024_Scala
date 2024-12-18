@@ -3,13 +3,13 @@ package year2024.day18
 import box.Box
 import year2024.DayOf2024
 import parse.{*, given}
-import coord.{Coord, Pos, pos, posRead}
+import coord.{Pos, pos, posRead}
 import graph.traverse.BFS
 import math.BinarySearch
 
 type Input = List[Pos]
 
-given Read[Input] = Read("\n")
+given Read[Input] = Read.seq("\n")
 given gb: Box = Box(Pos(70,70))
 
 object Day18 extends DayOf2024[Input](18, "RAM Run"):
@@ -23,7 +23,7 @@ object Day18 extends DayOf2024[Input](18, "RAM Run"):
   override def part2(lps: Input): String =
     val res = BinarySearch.binarySearch(1025, lps.length)
       (lps.take)
-      (ls => BFS.stepCount(gb.min, gb.max)(ns(ls)) == None)
+      (ls => BFS.stepCount(gb.min, gb.max)(ns(ls)).isEmpty)
     val pos = res._2.last
     s"${pos.x},${pos.y}"
 

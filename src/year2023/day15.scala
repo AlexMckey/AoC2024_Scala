@@ -6,7 +6,7 @@ import scala.collection.mutable
 
 type I = List[String]
 
-given Read[I] = Read(",")
+given Read[I] = Read.seq(",")
 
 object Day15 extends DayOf2023[I](15, "Lens Library"):
 

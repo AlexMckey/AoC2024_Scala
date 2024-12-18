@@ -7,11 +7,11 @@ import exts.iterables.middle
 case class Input(rules: Set[(Int, Int)], prints: List[Vector[Int]]):
   val ordering: Ordering[Int] = Ordering.fromLessThan((l,r) => rules.contains(l -> r))
 
-given Read[Vector[Int]] = Read(",")
-given Read[List[Vector[Int]]] = Read("\n")
-given Read[(Int,Int)] = Read("""(\d+)\|(\d+)""".r)
-given Read[Set[(Int, Int)]] = Read("\n")
-given Read[Input] = Read("\n\n")
+given Read[Vector[Int]] = Read.seq(",")
+given Read[List[Vector[Int]]] = Read.seq("\n")
+given Read[(Int, Int)] = Read.product("""(\d+)\|(\d+)""".r)
+given Read[Set[(Int,Int)]] = Read.seq("\n")
+given Read[Input] = Read.product("\n\n")
 
 object Day05 extends DayOf2024[Input](5, "Print Queue"):
 

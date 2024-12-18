@@ -3,7 +3,7 @@ package year2023.day01
 import year2023.DayOf2023
 import parse.{*, given}
 
-given Read[List[String]] = Read("\n")
+given Read[List[String]] = Read.seq("\n")
 
 object Day01 extends DayOf2023[List[String]](1, "Trebuchet?!"):
   

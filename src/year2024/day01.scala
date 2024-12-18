@@ -6,8 +6,8 @@ import exts.iterables.countItems
 
 type I = List[List[Int]]
 
-given Read[List[Int]] = Read("\\s+")
-given Read[I] = Read("\n")
+given Read[List[Int]] = Read.seq("\\s+")
+given Read[I] = Read.seq("\n")
 
 object Day01 extends DayOf2024[I](1, "Historian Hysteria"):
 

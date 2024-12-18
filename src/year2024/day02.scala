@@ -7,8 +7,8 @@ import scala.annotation.tailrec
 
 type I = List[List[Int]]
 
-given Read[List[Int]] = Read(" ")
-given Read[I] = Read("\n")
+given Read[List[Int]] = Read.seq(" ")
+given Read[I] = Read.seq("\n")
 
 object Day02 extends DayOf2024[I](2, "Red-Nosed Reports"):
 

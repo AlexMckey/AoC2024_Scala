@@ -20,8 +20,8 @@ case class Robot(p: Pos, v: Pos):
 
 type I = List[Robot]
 
-given Read[Robot] = Read("""p=(-?\d+,-?\d+) v=(-?\d+,-?\d+)""".r)
-given Read[List[Robot]] = Read("\n")
+given Read[Robot] = Read.product("""p=(-?\d+,-?\d+) v=(-?\d+,-?\d+)""".r)
+given Read[List[Robot]] = Read.seq("\n")
 
 object Day14 extends DayOf2024[I](14, "Restroom Redoubt"):
 

@@ -17,9 +17,10 @@ case class Input(maze: Maze, moves: Array[Char]):
       case '#' => "##"
     }.toString)
 
-given Read[Input] = Read("\n\n")
+given Read[Input] = Read.product("\n\n")
 given Read[Maze] = VectorGrid.charVectorGridReader
-given Read[Array[Char]] = _.replaceAll("\n","").toCharArray
+//given Read[Array[Char]] = _.replaceAll("\n","").toCharArray
+given Read[Array[Char]] = summon[Read[String]].replaceAll(List("\n" -> "")).map(_.toCharArray)
 
 object Day15 extends DayOf2024[Input](15, "Warehouse Woes"):
 

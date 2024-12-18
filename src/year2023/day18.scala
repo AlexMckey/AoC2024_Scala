@@ -19,8 +19,8 @@ case class Dig(dir: String, cnt: Int, color: String):
     
 type DataType = List[Dig]
 
-given Read[Dig] = Read("""([RLDU]) (\d+) \(#([\dabcdef]+)\)""")
-given Read[DataType] = Read("\n")
+given Read[Dig] = Read.product("""([RLDU]) (\d+) \(#([\dabcdef]+)\)""")
+given Read[DataType] = Read.seq("\n")
 
 object Day18 extends DayOf2023[DataType](18, "Lavaduct Lagoon"):
 

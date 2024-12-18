@@ -8,8 +8,8 @@ import scala.annotation.tailrec
 
 type DataType = List[List[Int]]
 
-given Read[List[Int]] = Read(" ")
-given Read[DataType] = Read("\n")
+given Read[List[Int]] = Read.seq(" ")
+given Read[DataType] = Read.seq("\n")
 
 object Day09 extends DayOf2023[DataType](9, "Mirage Maintenance"):
 

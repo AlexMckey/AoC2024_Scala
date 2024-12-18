@@ -7,6 +7,7 @@ enum FS(len: Int):
       case Free(_) => 0
 
 import FS.*
+import parse.Read
 
 import scala.annotation.tailrec
 
@@ -116,3 +117,9 @@ def sparseCompact(fs: List[FS]): List[FS] =
 
 val res2 = sparseCompact(fs)
 checksumFS(res2)
+
+
+import parse.{*, given}
+given Read[List[Int]] = Read.seq("")
+
+summon[Read[List[Int]]].read("1251515151")

@@ -13,9 +13,9 @@ case class ClawMachine(a: Pos, b: Pos, p: Pos):
 
 type I = List[ClawMachine]
 
-given Read[Pos] = Read(""".+: X[+|=](\d+), Y[+|=](\d+)""".r)
-given Read[ClawMachine] = Read("\n")
-given Read[List[ClawMachine]] = Read("\n\n")
+given Read[Pos] = Read.product(""".+: X[+|=](\d+), Y[+|=](\d+)""".r)
+given Read[ClawMachine] = Read.product("\n")
+given Read[List[ClawMachine]] = Read.seq("\n\n")
 
 object Day13 extends DayOf2024[I](13, "Claw Contraption"):
 

@@ -9,8 +9,8 @@ case class Muls(s: String)
 
 type I = List[Muls]
 
-given Read[Muls] = Read("""mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\)""".r)
-given Read[I] = Read("\\s*")
+given Read[Muls] = Read.product("""mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\)""".r)
+given Read[I] = Read.seq("\\s*")
 
 object Day03 extends DayOf2024[I](3, "Mull It Over"):
 

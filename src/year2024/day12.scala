@@ -8,16 +8,16 @@ import box.Box
 import graph.traverse.old.BFS
 
 type Region = Set[Pos]
-type I = Set[Region]
 
-given Read[Set[Region]] with
-  override def read(input: String): Set[Region] =
-    def neighbors(g: CharGrid)(p: Pos): Iterator[Pos] =
-      p.nearAxis.filter(g.contains).filter(g(_) == g(p))
-    val g = MapGrid(input)
-    BFS.components(g.allPos, neighbors(g))
+case class Garden(s: String):
+  def neighbors(g: CharGrid)(p: Pos): Iterator[Pos] =
+    p.nearAxis.filter(g.contains).filter(g(_) == g(p))
+  lazy val g: CharGrid = MapGrid(s)
+  lazy val regions: List[Region] = BFS.components(g.allPos, neighbors(g)).toList
 
-object Day12 extends DayOf2024[I](12, "Garden Groups"):
+given Read[Garden] = Garden(_)
+
+object Day12 extends DayOf2024[Garden](12, "Garden Groups"):
 
   def perimeter(region: Set[Pos]): Int =
     region
@@ -36,11 +36,11 @@ object Day12 extends DayOf2024[I](12, "Garden Groups"):
       .sum.abs)
       .sum
 
-  override def part1(garden: I): Long =
-    garden.toList.map(r => r.size * perimeter(r)).sum
+  override def part1(garden: Garden): Long =
+    garden.regions.map(r => r.size * perimeter(r)).sum
 
-  override def part2(garden: I): Long =
-    garden.toList.map(r => r.size * sides(r)).sum
+  override def part2(garden: Garden): Long =
+    garden.regions.map(r => r.size * sides(r)).sum
 
 //Day 12: Garden Groups
 //  parse : 329.ms

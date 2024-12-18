@@ -8,7 +8,7 @@ import exts.iterables.groupCount
 
 type I = List[Long]
 
-given Read[List[Long]] = Read("\\s")
+given Read[List[Long]] = Read.seq("\\s")
 
 object Day11 extends DayOf2024[I](11, "Plutonian Pebbles"):
 

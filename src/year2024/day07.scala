@@ -16,9 +16,9 @@ case class Equation(res: Long, args: List[Long]):
 
     rec(args.head, args.tail)
 
-given operandList: Read[List[Long]] = Read(" ")
-given Read[Equation] = Read(": ")
-given Read[List[Equation]] = Read("\n")
+given ol: Read[List[Long]] = Read.seq(" ")
+given Read[Equation] = Read.product(": ")
+given Read[List[Equation]] = Read.seq("\n")
 
 def concat(lhs: Long, rhs: Long): Long =
   (lhs.toString + rhs.toString).toLong

@@ -25,12 +25,12 @@ case class Game(id: Int, rounds: List[Round]) extends Possible:
 
 type I = List[Game]
 
-given Read[Cube] = Read("""(\d+) (.+)""".r)
-given lc: Read[List[Cube]] = Read(", ")
-given Read[Round] = Read("""(.+)""".r)
-given Read[List[Round]] = Read("; ")
-given Read[Game] = Read("""Game (\d+): (.+)""".r)
-given Read[I] = Read("\n")
+given Read[Cube] = Read.product("""(\d+) (.+)""".r)
+given lc: Read[List[Cube]] = Read.seq(", ")
+given Read[Round] = Read.product("""(.+)""".r)
+given Read[List[Round]] = Read.seq("; ")
+given Read[Game] = Read.product("""Game (\d+): (.+)""".r)
+given Read[I] = Read.seq("\n")
 
 object Day02 extends DayOf2023[I](2, "Cube Conundrum"):
 

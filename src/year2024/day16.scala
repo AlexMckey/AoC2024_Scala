@@ -3,16 +3,16 @@ package year2024.day16
 import year2024.DayOf2024
 import parse.{*, given}
 import grid.{CharGrid, VectorGrid}
-import VectorGrid.charVectorGridReader
 import coord.{Dir, Pos}
 import graph.traverse.Dijkstra
 import walker.Walker
 
-case class Maze(g: CharGrid):
+case class Maze(input: String):
+  private lazy val g: CharGrid = VectorGrid(input)
   private lazy val start: Walker = Walker(g.find('S').get, Dir.E)
   private lazy val endPos: Pos = g.find('E').get
-  private lazy val (path, Some(goal, steps)): (Map[Walker, Int], Option[(Walker, Int)]) =
-    Dijkstra.search(start, _.p == endPos)(ns(_.step)) : @unchecked
+  private lazy val (Some(goal, steps), path): (Option[(Walker, Int)], Map[Walker, Int]) =
+    Dijkstra(start, _.p == endPos)(ns(_.step)) : @unchecked
 
   private def ns(go: Walker => Walker)(w: Walker): Set[(Walker, Int)] =
     val newW = go(w)
@@ -36,7 +36,7 @@ case class Maze(g: CharGrid):
 
   def bestPathCnt: Int = backPaths(goal).size
 
-given Read[Maze] = s => Maze(VectorGrid(s))
+given Read[Maze] = Maze(_)
 
 object Day16 extends DayOf2024[Maze](16, "Reindeer Maze"):
 

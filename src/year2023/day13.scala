@@ -10,8 +10,8 @@ import grid.{CharGrid, Grid, MapGrid}
 type Image = List[String]
 type DataType = List[Image]
 
-given Read[Image] = Read("\n")
-given Read[DataType] = Read("\\nn")
+given Read[Image] = Read.seq("\n")
+given Read[DataType] = Read.seq("\n\n")
 
 object Day13 extends DayOf2023[DataType](13, "Point of Incidence"):
 
