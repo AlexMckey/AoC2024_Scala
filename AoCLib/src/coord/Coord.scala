@@ -34,7 +34,7 @@ trait Coord[C]:
     def unary_- : C = a.map(N.negate)
     def -(b: C): C = a + -b
     def norm: Item = a.axis.map(N.abs).sum
-    def manhattan(b: C): Item = zip(a,b)(N.minus).norm
+    infix def manhattan(b: C): Item = zip(a,b)(N.minus).norm
     def nearAll: Iterator[C] = all.filter(_ != a)
     def all: Iterator[C] = Coord.cubeAt(a)(using this)
     def nearAxis: Iterator[C] =
