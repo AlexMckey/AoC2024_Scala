@@ -3,7 +3,7 @@ package graph.traverse
 import scala.collection.mutable
 
 object Dijkstra:
-  def search[A](start: A, goal: A => Boolean)(ns: A => Set[(A, Int)]): (Map[A, Int], Option[(A, Int)]) =
+  def apply[A](start: A, goal: A => Boolean)(ns: A => Set[(A, Int)]): (Option[(A, Int)], Map[A, Int]) =
     val distances = mutable.Map[A, Int](start -> 0)
     val unseen = mutable.PriorityQueue((0, start))(Ordering.by(-_._1))
     val visited = mutable.Set.empty[A]
@@ -11,7 +11,7 @@ object Dijkstra:
       val (currentDist, currentNode) = unseen.dequeue()
       if !visited.contains(currentNode) then
         visited.add(currentNode)
-        if goal(currentNode) then return (distances.toMap, Some(currentNode -> currentDist))
+        if goal(currentNode) then return (Some(currentNode -> currentDist), distances.toMap)
         // Process neighbors
         for (neighbor, weight) <- ns(currentNode) do
           val newDist = currentDist + weight
@@ -19,4 +19,4 @@ object Dijkstra:
             distances(neighbor) = newDist
             unseen.enqueue((newDist, neighbor))
 
-    (distances.toMap, None)
+    (None, distances.toMap)

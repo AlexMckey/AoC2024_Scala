@@ -41,6 +41,9 @@ object BFS:
 //    visitedDistance.toMap
 //  end traverseMut
 
+  def stepCount[A](start: A, goal: A)(ns: A => Iterable[A]): Option[Int] =
+    stepCount(start, _ == goal)(ns)
+
   def stepCount[A](start: A, goal: A => Boolean)(ns: A => Iterable[A]): Option[Int] =
     @tailrec
     def rec(toVisit: Iterable[A], cost: Map[A, Int]): Option[Int] = toVisit match
