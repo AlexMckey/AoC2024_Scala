@@ -12,7 +12,7 @@ case class Pos(x: Int, y: Int) derives CanEqual:
     else times
     (1 to left).foldLeft(this) { case (Pos(x, y), _) => Pos(-y, x) }
   // (2, 1) - left => (-1, 2)
-  def cross(that: Pos): Long = x.toLong * that.y - that.x.toLong * y
+  infix def cross(that: Pos): Long = x.toLong * that.y - that.x.toLong * y
   def pair: (Int, Int) = x -> y
   def swap: Pos = Pos(y, x)
   
