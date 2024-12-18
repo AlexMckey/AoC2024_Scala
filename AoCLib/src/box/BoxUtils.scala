@@ -1,6 +1,6 @@
 package box
 
-import coord.{*, given}
+import coord.{Coord, given}
 import scala.math.Ordering.Implicits.infixOrderingOps
 
 trait Boxs[A : Coord : Ordering, B <: Boxs[A, B]](val dl: A, val ur: A):
@@ -33,7 +33,7 @@ trait Boxs[A : Coord : Ordering, B <: Boxs[A, B]](val dl: A, val ur: A):
 trait BoxFactory[A : Coord : Ordering, B <: Boxs[A, B]]:
   def apply(dl: A, ur: A): B
 
-  def apply(pos: A): B = apply(pos, pos)
+  //def apply(pos: A): B = apply(pos, pos)
 
   def bounding(poss: Iterable[A])(using V: Coord[A])(using N: Ordering[V.Item]): B =
     apply.tupled(Coord.boundingBox(poss))
