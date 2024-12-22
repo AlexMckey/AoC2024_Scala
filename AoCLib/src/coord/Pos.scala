@@ -2,6 +2,7 @@ package coord
 
 import parse.Read
 
+import scala.annotation.targetName
 import scala.io.AnsiColor.*
 
 case class Pos(x: Int, y: Int) derives CanEqual:
@@ -18,6 +19,11 @@ case class Pos(x: Int, y: Int) derives CanEqual:
   
   def toDir(d: Dir): Pos = this + d.delta
   def toDir(d: Dir, cnt: Int): Pos = this + d.delta * cnt
+
+  @targetName("manhattanMoves")
+  def +->(dst: Pos): Vector[Dir] =
+    Option.when(x != dst.x)(if dst.x < x then Dir.W else Dir.E).toVector ++
+      Option.when(y != dst.y)(if dst.y < y then Dir.N else Dir.S)
 
 object Pos:
   private def simpleRender: Pos => String = _ => s"$WHITE_B#"
