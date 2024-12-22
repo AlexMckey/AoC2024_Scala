@@ -29,7 +29,7 @@ case class Path(g: CharGrid):
     (pipes(a).map(p.toDir) - p).iterator
 
   val path: Seq[Pos] =
-    val start = g.find('S').getOrElse(Pos.zero)
+    val start = g.posOf('S').getOrElse(Pos.zero)
     val startNears = start.nearAxis.filter(n => nearPipes(n, g(n)).contains(start)).map(_ - start).toSet
     val startChar = pipes.map(_.swap)(startNears.map(asDir))
     val newG = g.updated(start, startChar)

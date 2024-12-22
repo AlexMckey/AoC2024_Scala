@@ -51,7 +51,7 @@ abstract class Grid[A : Default] derives CanEqual:
   def sum(using Numeric[A]): A
   def allPos: Set[Pos]
 
-  def find(a: A): Option[Pos] = find((_, c) => c == a)
+  def posOf(a: A): Option[Pos] = find((_, c) => c == a)
   def find(a: A => Boolean): Option[Pos] = find((_, c) => a(c))
   def find(a: (Pos, A) => Boolean): Option[Pos]
   def findAll(length: Int, regex: Regex, directions: List[Dir] = List(Dir.E)): Iterator[Pos] =

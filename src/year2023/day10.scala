@@ -18,7 +18,7 @@ object Day10 extends DayOf2023[CharGrid](10, "Pipe Maze"):
 
   override def prep(input: String): CharGrid =
     val g = VectorGrid(input)
-    val start      = g.find('S').getOrElse(Pos.zero)
+    val start      = g.posOf('S').getOrElse(Pos.zero)
     val startNears = start.nearAxis.filter(n => nearPipes(n, g(n)).contains(start)).map(_ - start).toSet
     val startChar  = pipes.map(_.swap)(startNears.map(asDir))
     val newG       = g.updated(start, startChar)

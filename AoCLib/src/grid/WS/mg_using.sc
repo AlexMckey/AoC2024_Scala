@@ -41,9 +41,9 @@ ge.count(_ == '2')
 ge.iterator.toList.size
 ge.iteratorAll.toList.size
 
-ge.find('0')
-ge.find('2')
-ge.find('5')
+ge.posOf('0')
+ge.posOf('2')
+ge.posOf('5')
 
 g.contains(p1)
 g.contains(p2)

@@ -11,7 +11,7 @@ val s = "##########\n#..O..O.O#\n#......O.#\n#.OO..O.O#\n#..O@..O.#\n#O#..O...#\
 val Array(mazes, movess) = s.split("\n\n")
 val ms = movess.replaceAll("\n","").toCharArray
 val g = VectorGrid(mazes)
-val oldStart = g.find('@').get
+val oldStart = g.posOf('@').get
 
 extension (mz: CharGrid)
   def GPScore(wall: Char = 'O'): Long =
@@ -25,7 +25,7 @@ val newG = VectorGrid(g.map{
   case '#' => "##"
 }.toString)
 
-val newStart = newG.find('@').get
+val newStart = newG.posOf('@').get
 
 VectorGrid("##########\n##...[]...\n##........")
   .GPScore('[')

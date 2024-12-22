@@ -29,7 +29,7 @@ case class Walker(start: State)(using grid: CharGrid):
 
 val s = "....#.....\n.........#\n..........\n..#.......\n.......#..\n..........\n.#..^.....\n........#.\n#.........\n......#..."
 given g: CharGrid = VectorGrid(s)
-val start = State(g.find('^').get, Dir.N)
+val start = State(g.posOf('^').get, Dir.N)
 val walker = Walker(start)
 val path = walker.path
 path.map(_.p).distinct.size

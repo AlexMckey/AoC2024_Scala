@@ -10,7 +10,7 @@ import walker.{Walker, Travel}
 type I = CharGrid
 
 case class GuardTravel(grid: CharGrid) extends Travel(grid):
-  override def start: Walker = Walker(grid.find('^').get, Dir.N)
+  override def start: Walker = Walker(grid.posOf('^').get, Dir.N)
   override def stopWalk(st: Walker): Boolean = grid.get(st.p).isEmpty
   override def isBlocked(st: Walker): Boolean = grid.isEq(st.p, '#')
   override def changeStateRule(st: Walker): Walker =

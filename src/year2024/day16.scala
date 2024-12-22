@@ -9,8 +9,8 @@ import walker.Walker
 
 case class Maze(input: String):
   private lazy val g: CharGrid = VectorGrid(input)
-  private lazy val start: Walker = Walker(g.find('S').get, Dir.E)
-  private lazy val endPos: Pos = g.find('E').get
+  private lazy val start: Walker = Walker(g.posOf('S').get, Dir.E)
+  private lazy val endPos: Pos = g.posOf('E').get
   private lazy val (Some(goal, steps), path): (Option[(Walker, Int)], Map[Walker, Int]) =
     Dijkstra(start, _.p == endPos)(ns(_.step)) : @unchecked
 

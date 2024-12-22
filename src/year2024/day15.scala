@@ -90,14 +90,14 @@ object Day15 extends DayOf2024[Input](15, "Warehouse Woes"):
 
   override def part1(i: Input): Long =
     val maze = i.maze
-    val start = maze.find('@').get
+    val start = maze.posOf('@').get
     i.moves
       .foldLeft(SimpleState(maze, start)){ (st, d) => st.step(d) }
       .g.GPScore()
 
   override def part2(i: Input): Long =
     val expandedMaze = i.expandedMaze
-    val start = expandedMaze.find('@').get
+    val start = expandedMaze.posOf('@').get
     i.moves
       .foldLeft(ExtendedState(expandedMaze, start)) { (st, d) => st.step(d) }
       .g.GPScore('[')

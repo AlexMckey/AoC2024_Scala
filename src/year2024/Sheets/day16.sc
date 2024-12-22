@@ -9,8 +9,8 @@ val m = VectorGrid(s)
 
 case class State(p: Pos, d: Dir)
 
-val start = State(m.find('S').get, Dir.E)
-val end = m.find('E').get
+val start = State(m.posOf('S').get, Dir.E)
+val end = m.posOf('E').get
 
 def ns(st: State): Seq[(State, Int)] = {
   val newP = st.p.toDir(st.d)

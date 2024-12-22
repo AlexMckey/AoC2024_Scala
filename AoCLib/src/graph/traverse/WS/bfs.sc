@@ -7,8 +7,8 @@ import graph.traverse.BFS
 val s = "###############\n#.......#....E#\n#.#.###.#.###.#\n#.....#.#...#.#\n#.###.#####.#.#\n#.#.#.......#.#\n#.#.#####.###.#\n#...........#.#\n###.#.#####.#.#\n#...#.....#.#.#\n#.#.#.###.#.#.#\n#.....#...#.#.#\n#.###.#.#.#.#.#\n#S..#.....#...#\n###############"
 val g = VectorGrid(s)
 
-val start = g.find('S').get
-val end = g.find('E').get
+val start = g.posOf('S').get
+val end = g.posOf('E').get
 
 def ns(st: Walker): Seq[Walker] =
   val next = st.step

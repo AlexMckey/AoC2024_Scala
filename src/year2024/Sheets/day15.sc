@@ -28,7 +28,7 @@ val wall = '#'
 val stone = 'O'
 val empty = '.'
 val robot = '@'
-val start: Pos = g.find('@').get
+val start: Pos = g.posOf('@').get
 
 def ray(g: CharGrid, p: Pos)(d: Dir): Seq[Char] =
   @tailrec
