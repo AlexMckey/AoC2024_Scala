@@ -10,7 +10,7 @@ enum GateType:
 
   def apply(x: Int, y: Int): Int = this match
     case AND => x & y
-    case OR => x | y
+    case OR =>  x | y
     case XOR => x ^ y
 
   def apply(s0: String, s1: String): String =

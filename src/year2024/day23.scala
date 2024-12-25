@@ -6,6 +6,12 @@ import parse.{*, given}
 type Edge = (String, String)
 
 given Read[LAN] = LAN(_)
+//type Connections = Map[String, Set[String]]
+//
+//given Read[(String, String)] = Read[(String, String)]("-")
+//given Read[List[(String, String)]] = Read("\n")
+//given Read[Connections] = summon[Read[List[(String, String)]]].map: pairs =>
+//  pairs.flatMap((l, r) => List((l, r), (r, l))).foldLeft(Map.empty[String, Set[String]]){case (map, (k, v)) => map.addMulti(k, v)}
 
 case class LAN(s: String):
   lazy val edges: Set[Edge] = s.split("\n")
