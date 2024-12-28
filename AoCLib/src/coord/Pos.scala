@@ -16,6 +16,7 @@ case class Pos(x: Int, y: Int) derives CanEqual:
   infix def cross(that: Pos): Long = x.toLong * that.y - that.x.toLong * y
   def pair: (Int, Int) = x -> y
   def swap: Pos = Pos(y, x)
+  def sign: Pos = Pos(x.sign, y.sign) 
   
   def toDir(d: Dir): Pos = this + d.delta
   def toDir(d: Dir, cnt: Int): Pos = this + d.delta * cnt
