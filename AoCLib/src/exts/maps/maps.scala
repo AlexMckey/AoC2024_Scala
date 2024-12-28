@@ -1,5 +1,7 @@
 package exts.maps
 
+import scala.math.Integral.Implicits.infixIntegralOps
+
 type A = Any
 
 //def merge[A, B](a: Map[A, B], b: Map[A, B])(mergef: (B, Option[B]) => B): Map[A, B] =
@@ -9,8 +11,18 @@ type A = Any
 //def mergeIntSum[A](a: Map[A, Int], b: Map[A, Int]): Map[A, Int] =
 //  merge(a, b)((v1, v2) => v2.map(_ + v1).getOrElse(v1))
 
-extension [K, B <: A, C <: A](left: Map[K, B])
+extension [K, V](m: Map[K, Set[V]])
+  def addMulti(k: K, v: V): Map[K, Set[V]] =
+    m + ((k, m.getOrElse(k, Set.empty) + v))
 
+  def delMulti(k: K, v: V): Map[K, Set[V]] =
+    val newSet = m.get(k).fold(Set.empty)(_ - v)
+    if newSet.isEmpty then
+      m - k
+    else
+      m + (k -> newSet)
+
+extension [K, B <: A, C <: A](left: Map[K, B])
   def putMerge(key: K, value: B)(merge: (B, B) => B): Map[K, B] =
     left.updated(key, left.get(key).fold(value)(merge(_, value)))
 
