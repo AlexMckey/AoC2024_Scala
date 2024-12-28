@@ -87,6 +87,7 @@ enum Dir private(val delta: Pos):
   case SE extends Dir(Pos(1, 1))
   case NW extends Dir(Pos(-1, -1))
   case SW extends Dir(Pos(-1, 1))
+  case Stand extends Dir(Pos.zero)
 
   def left: Dir = this match
     case N => W
@@ -97,6 +98,7 @@ enum Dir private(val delta: Pos):
     case NW => SW
     case SW => SE
     case SE => NE
+    case Stand => Stand
 
   def right: Dir = this match
     case N => E
@@ -107,6 +109,7 @@ enum Dir private(val delta: Pos):
     case SE => SW
     case SW => NW
     case NW => NE
+    case Stand => Stand
 
   def flip: Dir = left.left
 
@@ -118,17 +121,14 @@ enum Dir private(val delta: Pos):
     turn(left = true, (360 + degrees) % 360 / 90)
 
 object Dir:
-  def between(start: Pos, end: Pos): Dir =
-    val delta = end - start
-    Dir.values.find(_.delta == delta).getOrElse(sys.error(s"$start and $end are not neighbours"))
-
-  extension (p: Pos)
-    def ~(d: Dir): Pos = p + d.delta
-    def ~~(d: Dir): Iterator[Pos] = Iterator.iterate(p)(_ ~ d)
+  extension (start: Pos)
+    def ~(d: Dir): Pos = start + d.delta
+    def ~~(d: Dir): Iterator[Pos] = Iterator.iterate(start)(_ ~ d)
     def asDir: Dir =
-      Dir.values.map(d => d -> d.delta).find(_._2 == p) match
-        case Some((d, _)) => d
-        case _ => throw new IllegalArgumentException("Неверная позиция для напрвления")
+      Dir.values.find(_.delta == start) match
+        case Some(d) => d
+        case _ => throw new IllegalArgumentException("Неверная позиция для направления")
+    def between(end: Pos): Dir = (end - start).sign.asDir
 
   import Dir._
   val axisDirs: Seq[Dir] = List(N,E,S,W)
@@ -140,6 +140,13 @@ object GridDir:
   val R: Dir = Dir.E
   val U: Dir = Dir.N
   val D: Dir = Dir.S
+  extension (d: Dir)
+    def asGridChar: Char = d match
+      case Dir.E => '>'
+      case Dir.W => '<'
+      case Dir.N => '^'
+      case Dir.S => 'v'
+      case _ => '.'
 
   extension (ch: Char)
     def asGridDir: Dir = ch match
