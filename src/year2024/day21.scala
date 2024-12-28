@@ -5,7 +5,7 @@ import parse.{*, given}
 import memo.{Cache, Memoize, Memoized}
 import graph.*
 import grid.MapGrid
-import coord.Dir
+import coord.{Dir, GridDir}
 
 type Nums = List[String]
 given Read[Nums] = Read.seq("\n")
@@ -18,6 +18,7 @@ object Day21 extends DayOf2024[Nums](21, "Keypad Conundrum"):
   val DirPad: MapGrid[Char] = MapGrid(" ^A\n<v>")
 
   import Dir.*
+  import GridDir.asDirChar
 
   extension (d: Dir)
     def toDirChar: Char =
@@ -36,7 +37,7 @@ object Day21 extends DayOf2024[Nums](21, "Keypad Conundrum"):
           Dir.axisDirs.flatMap { d =>
             val newP = p.toDir(d)
             if g.contains(newP) && g(newP) != ' '
-            then List((ch, g(newP),d.toDirChar))
+            then List((ch, g(newP),d.asDirChar))
             else List.empty
           }
         }.toList

@@ -141,7 +141,7 @@ object GridDir:
   val U: Dir = Dir.N
   val D: Dir = Dir.S
   extension (d: Dir)
-    def asGridChar: Char = d match
+    def asDirChar: Char = d match
       case Dir.E => '>'
       case Dir.W => '<'
       case Dir.N => '^'
