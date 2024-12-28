@@ -9,7 +9,6 @@ import scalaz.syntax.functor.*
 
 import scala.annotation.targetName
 import scala.collection.mutable
-import scala.math.E
 import scala.math.Ordering.Implicits.infixOrderingOps
 import Dir.*
 
