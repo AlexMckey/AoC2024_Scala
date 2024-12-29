@@ -1,6 +1,7 @@
 import grid.{CharGrid, MapGrid}
 import coord.{Dir, Pos, pos}
 import memo.{Cache, Memoize, Memoized}
+import exts.iterables.sliding2
 
 val s = "029A\n980A\n179A\n456A\n379A"
 val nums = s.split("\n")
@@ -71,8 +72,9 @@ def solve(depth: Int, code: String): Long =
     //println(s"path: $path")
     if path.length < 2 then List('A')
     else
-      path.sliding(2)
-        .map{ ar => ar(0).between(ar(1)).asDirChar}
+      path.sliding2
+        .map(between)
+        .map(_.asDirChar)
         .toList.appended('A')
 
   extension (g: CharGrid)

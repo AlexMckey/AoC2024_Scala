@@ -128,7 +128,7 @@ object Dir:
       Dir.values.find(_.delta == start) match
         case Some(d) => d
         case _ => throw new IllegalArgumentException("Неверная позиция для направления")
-    def between(end: Pos): Dir = (end - start).sign.asDir
+  def between(from: Pos, end: Pos): Dir = (end - from).sign.asDir
 
   import Dir._
   val axisDirs: Seq[Dir] = List(N,E,S,W)

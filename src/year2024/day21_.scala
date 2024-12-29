@@ -7,6 +7,7 @@ import coord.{Dir, Pos, pos}
 import Dir.*
 import coord.GridDir.asDirChar
 import memo.{Cache, Memoize, Memoized}
+import exts.iterables.sliding2
 import graph.traverse.DFS
 
 type Nums = List[String]
@@ -27,8 +28,9 @@ object Day21_ extends DayOf2024[Nums](21, "Keypad Conundrum"):
     def presses(path: List[Pos]): List[Char] =
       if path.length < 2 then List('A')
       else
-        path.sliding(2)
-          .map { ar => ar(0).between(ar(1)).asDirChar }
+        path.sliding2
+          .map(between)
+          .map(_.asDirChar)
           .toList.appended('A')
 
     extension (g: CharGrid)
@@ -49,14 +51,12 @@ object Day21_ extends DayOf2024[Nums](21, "Keypad Conundrum"):
       else
         ('A' :: code)
           .map(pad.posOf(_).get)
-          .sliding(2)
-          .map { ar =>
-            pad
-              .shortestPaths(ar(0), ar(1))
-              .map(presses)
-              .map(code => Memoize(stage, code)(pressCount(stage + 1, code)))
-              .min
-          }
+          .sliding2
+          .map(ps =>
+            pad.shortestPaths.tupled(ps)
+               .map(presses)
+               .map(code => Memoize(stage, code)(pressCount(stage + 1, code)))
+               .min)
           .sum
 
     pressCount(0, code.toCharArray.toList)

@@ -34,5 +34,7 @@ extension [A](it: Iterable[A])
   def second: A = it.tail.head
   def first: A = it.head
 
+  def sliding2: Iterator[(A, A)] = it.sliding(2).map(s => s.head -> s.last)
+
 extension [A](v: Vector[A])
   def middle: A = v(v.size / 2)
