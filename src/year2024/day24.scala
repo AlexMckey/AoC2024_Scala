@@ -10,7 +10,7 @@ enum GateType:
 
   def apply(x: Int, y: Int): Int = this match
     case AND => x & y
-    case OR =>  x | y
+    case OR  => x | y
     case XOR => x ^ y
 
   def apply(s0: String, s1: String): String =
@@ -27,7 +27,7 @@ type Wires = Map[Wire, Int]
 type Gates = Map[Wire, Gate]
 
 extension (s: String)
-  def pad(i: Long) = if i < 10 then s"${s}0$i" else s"$s$i"
+  def pad(i: Long) = f"$s$i%02d"
 
 case class Circuit(inputs: Wires, gates: Gates):
   def swap(out0: String, out1: String): Circuit =

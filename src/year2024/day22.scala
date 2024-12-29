@@ -14,9 +14,9 @@ extension (a: Long)
 
   def calcNext: Long =
     var n = a
-    n = (n mix(n << 6)).prune
-    n = (n mix(n >> 5)).prune
-    n = (n mix(n << 11)).prune
+    n = (n mix n << 6).prune
+    n = (n mix n >> 5).prune
+    n = (n mix n << 11).prune
     n
 
   def steps(n: Int): Long =

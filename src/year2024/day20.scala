@@ -1,11 +1,9 @@
 package year2024.day20
 
-import grid.CharGrid
 import year2024.DayOf2024
 import parse.{*, given}
 import grid.{CharGrid, VectorGrid}
-import VectorGrid.charVectorGridReader
-import coord.{pos, Pos, Coord}
+import coord.{pos, Pos}
 import graph.traverse.BFS
 
 case class RaceGrid(s: String):
