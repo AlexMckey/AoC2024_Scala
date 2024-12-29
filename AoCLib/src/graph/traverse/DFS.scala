@@ -23,6 +23,9 @@ object DFS:
     rec(start, Seq(start), Set(start))
   end search
 
+  def search[A](start: A, goal: A)(next: A => Seq[A]): Seq[Seq[A]] =
+    search(start, _ == goal)(next)
+
   def traverse[A](start: A)(ns: A => Iterable[A]): (Map[A, Int], Seq[A]) =
     val visitedDistance: mutable.Map[A, Int] = mutable.Map.empty
     val visitedOrder: mutable.Buffer[A] = mutable.Buffer.empty

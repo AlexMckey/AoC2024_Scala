@@ -64,7 +64,12 @@ object Day21 extends DayOf2024[Nums](21, "Keypad Conundrum"):
           .sliding(2)
           .map(segment => pad
             .shortestPaths(segment(0), segment(1))
-            .map(presses)
+            .map{lc =>
+              val res = presses(lc)
+              println(res.mkString)
+              println(stage)
+              res
+            }
             .map(code => Memoize(stage, code)(pressCount(stage + 1, code)))
             .min)
           .sum
@@ -72,10 +77,12 @@ object Day21 extends DayOf2024[Nums](21, "Keypad Conundrum"):
     pressCount(0, code.toCharArray.toList)
 
   override def part1(nums: Nums): Long =
-    nums.map(_.complexity(2)).sum
+    List("029A").map(_.complexity(2)).sum
+    //nums.map(_.complexity(2)).sum
 
   override def part2(nums: Nums): Long =
-    nums.map(_.complexity(25)).sum
+    //nums.map(_.complexity(25)).sum
+    0
 
 //Day 21: Keypad Conundrum
 //  parse : 8.06ms
